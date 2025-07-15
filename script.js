@@ -64,14 +64,18 @@ function updateProgressBar(index) {
     document.getElementById('progress-bar').style.width = `${progress}%`;
 }
 
-/* Atribuição de valores às respostas abertas */
-function classificarQ11(valor) {
-    if (valor <= 5) return 0;
-    if (valor <= 10) return 1;
-    if (valor <= 15) return 2;
-    if (valor <= 20) return 3;
-    return 4;
+// Função para classificar com base nas refeições vegetarianas
+function classificarRefeicoesVegetarianas(vegetarianas, total) {
+    if (total === 0) return 4; // Se não fez refeições, assume-se pegada alta.
+
+    const proporcao = vegetarianas / total;
+
+    if (proporcao === 0) return 4; // Nenhuma refeição vegetariana
+    if (proporcao <= 0.2) return 3; // Até 20% vegetariana
+    if (proporcao <= 0.5) return 2; // Até 50% vegetariana
+    return 1; // Mais de 50% vegetariana
 }
+
 
 function calcularImpactoDeslocacao() {
     const pessoas = parseFloat(document.getElementById('q1').value) || 0;
@@ -99,22 +103,16 @@ function calcularImpactoDeslocacao() {
 }
 
 function showResults() {
-    const q11Value = parseFloat(document.getElementById('q11').value);
-    if (isNaN(q11Value)) {
-        alert("Por favor, insere um número válido para a quantidade consumida.");
-        return;
-    }
+    // Obter as respostas para as refeições vegetarianas e o total de refeições
+    const vegetarianas = parseInt(document.getElementById('q11_vegetarianas').value) || 0;
+    const totalRefeicoes = parseInt(document.getElementById('q11_total').value) || 0;
+
+    // Classificar com base nas refeições vegetarianas
+    const scoreRefeicoes = classificarRefeicoesVegetarianas(vegetarianas, totalRefeicoes);
 
     let q1 = parseFloat(document.getElementById('q1').value) || 1; // número de participantes
     let q2 = parseFloat(document.getElementById('q2').value) || 0;
     let q4Original = parseFloat(document.getElementById('q4').value) || 0;
-    let q11 = parseFloat(document.getElementById('q11').value) || 0;
-
-    // Evitar divisão por zero
-    let consumoPorPessoa = q1 > 0 ? q11 / q1 : 0;
-
-    // Classificar com base no consumo por pessoa
-    let scoreQ11 = classificarQ11(consumoPorPessoa);
 
     let tipoTransporte = parseInt(document.getElementById('q3').value) || 0;
     // Declarar variáveis por categoria
@@ -128,7 +126,7 @@ function showResults() {
     tipologia += parseInt(document.getElementById('q7').value) || 0;
     tipologia += parseInt(document.getElementById('q8').value) || 0;
 
-    let alimentacao = scoreQ11;
+    let alimentacao = scoreRefeicoes;
     alimentacao += parseInt(document.getElementById('q9').value) || 0;
     alimentacao += parseInt(document.getElementById('q10').value) || 0;
 
@@ -151,9 +149,9 @@ function showResults() {
     let total = deslocacoes + tipologia + alimentacao + agua + energia + residuos;
 
     let message = "";
-    if (total < 10) {
+    if (total < 26) {
         message = "baixa";
-    } else if (total < 20) {
+    } else if (total < 38) {
         message = "moderada";
     } else {
         message = "alta";
@@ -161,8 +159,8 @@ function showResults() {
 
     document.getElementById('slides').style.display = 'none';
     document.getElementById('results').style.display = 'block';
-    document.getElementById('result').innerText = `O teu valor é de ${total}, logo, a tua Ponderação é ${message}`;
-    document.getElementById('resultCO').innerHTML += `<br><br>🚗 Emissões de deslocação: <strong>${impactoDeslocacao} kg CO₂</strong>`;
+    document.getElementById('result').innerHTML = `O teu valor é de <strong>${total}</strong>, logo, a tua Ponderação é ${message}`;
+    document.getElementById('resultCO').innerHTML += `🚗 Emissões de deslocação: <strong>${impactoDeslocacao} kg CO₂</strong>`;
 
     // Gerar gráfico circular
     const ctx = document.getElementById('footprintChart').getContext('2d');
@@ -178,23 +176,37 @@ function showResults() {
         }
     });
 
-    // Determinar a área com maior pontuação
+    // Determinar as 3 áreas com maior pontuação
     const categorias = ['Deslocações', 'Tipologia de Atividade', 'Alimentação', 'Água', 'Energia', 'Resíduos'];
     const valores = [deslocacoes, tipologia, alimentacao, agua, energia, residuos];
-    const indiceMax = valores.indexOf(Math.max(...valores));
-    const categoriaMaisAlta = categorias[indiceMax];
+    
+    // Obter os 3 maiores valores com seus índices
+    const top3 = valores
+        .map((valor, index) => ({ valor, index }))
+        .sort((a, b) => b.valor - a.valor)
+        .slice(0, 3);
 
     // Mensagens personalizadas por categoria
     const dicas = {
         'Deslocações': "🚶‍♀️ Considera reduzir o uso de transporte individual. Partilhar boleias ou usar transportes públicos pode fazer uma grande diferença!",
         'Tipologia de Atividade': "📦 Pensa em formas de tornar as tuas atividades mais sustentáveis, como reutilizar materiais ou evitar merchandising desnecessário.",
-        'Alimentação': "🥦 Opta por alimentos locais, biológicos e com menos embalagens. Pequenas escolhas fazem grande impacto!",
+        'Alimentação': "🥦 Opta por alimentos locais, biológicos e com menos embalagens. Pequenas escolhas fazem grande impacte!",
         'Água': "💧 Reutilizar água e usar métodos de lavagem mais eficientes ajuda a conservar este recurso precioso.",
         'Energia': "🔋 Explora formas de usar energias renováveis e reduzir o consumo energético nas tuas atividades.",
-        'Resíduos': "♻️ Reduz, reutiliza e recicla sempre que possível. Uma boa separação de resíduos é essencial!"
+        'Resíduos': "♻️ Reduz, reutiliza e recicla sempre que possível. Uma boa separação de resíduos é essencial!",
+        'Alimentação': "🌱 Comprar alimentos de produtores locais ou orgânicos reduz a pegada de carbono associada ao transporte e ao uso de pesticidas e fertilizantes químicos. Apoia a agricultura sustentável!",
+        'Alimentação': "🍎 Evitar alimentos altamente processados e optar por opções frescas e naturais também ajuda a diminuir o impacte ambiental. Explora alternativas vegetais sempre que possível, pois a produção animal tem um maior impacte ambiental.",
+        'Água': "🚰 Ao lavar alimentos, utiliza a água de maneira eficiente: usa recipientes para capturar a água usada e reaproveita para outras atividades, como regar plantas.",
+        'Energia': "🌞 A utilização de fontes renováveis de energia, como solar ou eólica, pode diminuir significativamente o impacte das atividades. Se possível, usa essas fontes para alimentar equipamentos e iluminação.",
+        'Resíduos': "🚮 Uma boa prática de separação de resíduos é crucial. Separa os resíduos recicláveis, como plásticos, vidros e papéis, e reencaminha-os corretamente. A compostagem de resíduos orgânicos também é uma excelente forma de reduzir a quantidade de lixo enviado para aterros.",
+        'Resíduos': "🛍️ Evita o uso de sacos plásticos descartáveis. Usa sacos de pano, papel ou material reciclado para transportar alimentos e materiais. Sempre que possível, reutiliza embalagens e recipientes."
     };
 
-    // Mostrar dica
-    document.getElementById('eco-tip').innerText = `💡 Dica: ${dicas[categoriaMaisAlta]}`;
+    // Exibir as 3 dicas com maior impacto
+    let dicasTop3 = top3.map(item => `${categorias[item.index]}: ${dicas[categorias[item.index]]}`).join("<br>");
+    document.getElementById('eco-tip').innerHTML = `${dicasTop3}`;
+
+    // Exibir o conteúdo da dica
+    document.getElementById('eco-tip').style.display = 'block'; // Assegurar que a dica seja visível
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
