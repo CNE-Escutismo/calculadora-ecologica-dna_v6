@@ -20,9 +20,9 @@
             <span id="cp-0" onclick="goToSlide(0)" title="Deslocações"><i class="fas fa-person-walking"></i></span>
             <span id="cp-4" onclick="goToSlide(5)" title="Tipologia"><i class="fas fa-puzzle-piece"></i></span>
             <span id="cp-9" onclick="goToSlide(10)" title="Alimentação"><i class="fas fa-carrot"></i></span>
-            <span id="cp-13" onclick="goToSlide(14)" title="Água"><i class="fas fa-water"></i></span>
-            <span id="cp-17" onclick="goToSlide(18)" title="Energia"><i class="fas fa-bolt"></i></span>
-            <span id="cp-21" onclick="goToSlide(22)" title="Resíduos"><i class="fas fa-recycle"></i></span>
+            <span id="cp-13" onclick="goToSlide(15)" title="Água"><i class="fas fa-water"></i></span>
+            <span id="cp-17" onclick="goToSlide(19)" title="Energia"><i class="fas fa-bolt"></i></span>
+            <span id="cp-21" onclick="goToSlide(23)" title="Resíduos"><i class="fas fa-recycle"></i></span>
         </div>
     </div>
 
@@ -35,14 +35,7 @@
                 <div class="intro-container">
                     <h1>Descomplica a tua Pegada</h1>
                     <h2>Bem-vindo à Ponderação da Pegada Ecológica da Tua Atividade!</h2>
-                    <p class="intro-text">Nesta ferramenta não vamos calcular emissões de carbono, mas sim fazer uma
-                        ponderação entre diferentes categorias que
-                        impactam o ambiente durante o nosso acampamento: deslocações, tipologia de atividades,
-                        alimentação,
-                        água, energia e resíduos.
-                        O objetivo é refletir sobre as nossas escolhas e promover práticas mais sustentáveis no
-                        dia-a-dia
-                        escutista.</p>
+                    <p class="intro-text">Nesta ferramenta não vamos fazer contas à pegada ecológica nem calcular emissões de carbono. Em vez disso, vamos olhar para diferentes partes do nosso acampamento: como nos deslocamos, que atividades fazemos, o que comemos, e como usamos água, energia e tratamos os resíduos. A ideia é pensar juntos sobre as nossas escolhas e descobrir formas mais amigas do ambiente para vivermos o escutismo no dia a dia.</p>
                     <button onclick="startQuiz()">Seguir para as perguntas</button>
                 </div>
             </div>
@@ -165,6 +158,7 @@
                 <!-- Slide 11 -->
                 <div class="slide green-container question-container">
                     <h2>Alimentação</h2>
+                    <button onclick="prevSlide()">Voltar atrás</button>
                     <button onclick="nextSlide()">Continuar</button>
                 </div>
 
@@ -197,20 +191,31 @@
                 </div>
 
                 <!-- Slide 14 -->
+                <!-- Slide para as refeições vegetarianas -->
                 <div class="slide green-container question-container">
                     <div class="category">Alimentação</div>
-                    <div class="question open-ended">Quantos quilos de __________ foram consumidos na tua atividade?
-                    </div>
-                    <input type="number" id="q11" min="0">
+                    <div class="question open-ended">Quantas refeições vegetarianas fizeste na tua atividade?</div>
+                    <input type="number" id="q11_vegetarianas" min="0">
                     <button onclick="prevSlide()">Voltar atrás</button>
                     <button onclick="nextSlide()">Continuar</button>
                 </div>
+
+                <!-- Slide para o total de refeições -->
+                <div class="slide green-container question-container">
+                    <div class="category">Alimentação</div>
+                    <div class="question open-ended">Quantas refeições no total fizeste na tua atividade?</div>
+                    <input type="number" id="q11_total" min="0">
+                    <button onclick="prevSlide()">Voltar atrás</button>
+                    <button onclick="nextSlide()">Continuar</button>
+                </div>
+
 
                 <!----------------------------------------------------------------------------------------------------------->
 
                 <!-- Slide 15 -->
                 <div class="slide blue-container question-container">
                     <h2>Água</h2>
+                    <button onclick="prevSlide()">Voltar atrás</button>
                     <button onclick="nextSlide()">Continuar</button>
                 </div>
 
@@ -241,11 +246,11 @@
                 <!-- Slide 18 -->
                 <div class="slide blue-container question-container">
                     <div class="category">Água</div>
-                    <div class="question option">Que tipo de itens de limpeza biodegradáveis utilizaste?</div>
+                    <div class="question option">Usaste algum produto biodegradável</div>
                     <select id="q14">
-                        <option value="2">Material de cozinha</option>
-                        <option value="2">Material de banho</option>
-                        <option value="1">Material de cozinha e banho</option>
+                        <option value="2">Shampô/Gel de Banho</option>
+                        <option value="2">Detergente da loiça</option>
+                        <option value="1">Ambos</option>
                         <option value="3">Nenhum</option>
                     </select>
                     <button onclick="prevSlide()">Voltar atrás</button>
@@ -257,6 +262,7 @@
                 <!-- Slide 19 -->
                 <div class="slide yellow-container question-container">
                     <h2>Energia</h2>
+                    <button onclick="prevSlide()">Voltar atrás</button>
                     <button onclick="nextSlide()">Continuar</button>
                 </div>
 
@@ -310,6 +316,7 @@
                 <!-- Slide 23 -->
                 <div class="slide purple-container question-container">
                     <h2>Resíduos</h2>
+                    <button onclick="prevSlide()">Voltar atrás</button>
                     <button onclick="nextSlide()">Continuar</button>
                 </div>
 
@@ -356,20 +363,54 @@
                     <button onclick="showResults()">Mostrar resultados</button>
                 </div>
             </div>
+
+
+            <!-- Resultados -->
             <div id="results" style="display: none;">
-                <div class="result-container">
-                    <h2 class="result-text">A tua pegada é...</h2>
-                    <p class="result-text" id="result"></p>
-                    <p class="resultCO-text" id="resultCO"></p>
+                <div class="results-container">
+                    <div class="result-container">
+                        <h2 class="result-title">Resultados da Tua Atividade</h2>
+                        <p id="result" class="result-text">Aqui aparece a tua ponderação, como por exemplo: "A tua pegada é moderada".</p>
+                        <p id="resultCO" class="result-text"></p>
+                    </div>
+
+                    <div class="result-explanation-container">
+                        <div class="chart-and-explanation">
+                            <div class="chart-explanation-content">
+                                <div id="chart-container" class="chart-container">
+                                    <canvas id="footprintChart"></canvas>
+                                </div>
+
+                                <div class="result-explanation">
+                                    <h3 class="explanation-title">O que significam os resultados?</h3>
+                                    <p>Cada resposta tem uma pontuação entre <strong>0</strong> e <strong>4</strong>:</p>
+                                    <ul>
+                                        <li><strong>0 a 1</strong> → Escolhas <span class="sustainable"><strong>mais sustentáveis</strong></span></li>
+                                        <li><strong>2 a 4</strong> → Escolhas <span class="unsustainable"><strong>menos sustentáveis</strong></span></li>
+                                    </ul>
+                                    <p>O gráfico mostra o impacte ambiental das tuas escolhas. Reflexão e ação: como podes reduzir a tua pegada e ser mais amigo do ambiente?</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips-container">
+                        <h3 class="tips-title">Usa estas dicas:</h3>
+                        <p id="eco-tip" class="result-text">Aqui aparece a dica baseada na tua categoria com maior impacto.</p>
+                    </div>
+
+                    <div class="calculators-container">
+                        <h4 class="calculators-title">Explora mais sobre o teu impacte:</h4>
+                        <ul>
+                            <li><a href="https://www.footprintcalculator.org/sponsor/FR/pt" target="_blank" class="calculators-link">🌍 Pegada Ecológica</a></li>
+                            <li><a href="https://calculadora-pegada-co2.climatehero.org/" target="_blank" class="calculators-link">🌱 Pegada de Carbono</a></li>
+                            <li><a href="https://ech2o.aprh.pt/peghidrica/pt/" target="_blank" class="calculators-link">💧 Pegada Hídrica</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div id="chart-container" style="max-width: 300px; margin: 0 auto;">
-                <canvas id="footprintChart"></canvas>
-            </div>
 
-            <div>
-                <p id="eco-tip" class="result-text" style="margin-top: 20px;"></p>
-            </div>
+
         </div>
     </div>
     <script src="script.js"></script>
