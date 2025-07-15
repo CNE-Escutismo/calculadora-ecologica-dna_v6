@@ -150,16 +150,16 @@ function showResults() {
 
     let message = "";
     if (total < 26) {
-        message = "baixa";
+        message = "Baixa";
     } else if (total < 38) {
-        message = "moderada";
+        message = "Moderada";
     } else {
-        message = "alta";
+        message = "Alta";
     }
 
     document.getElementById('slides').style.display = 'none';
     document.getElementById('results').style.display = 'block';
-    document.getElementById('result').innerHTML = `O teu valor é de <strong>${total}</strong>, logo, a tua Ponderação é ${message}`;
+    document.getElementById('result').innerHTML = `O valor é de <strong>${total}</strong>, logo, a tua Ponderação é <strong>${message}</strong>`;
     document.getElementById('resultCO').innerHTML += `🚗 Emissões de deslocação: <strong>${impactoDeslocacao} kg CO₂</strong>`;
 
     // Gerar gráfico circular
@@ -210,3 +210,4 @@ function showResults() {
     document.getElementById('eco-tip').style.display = 'block'; // Assegurar que a dica seja visível
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
