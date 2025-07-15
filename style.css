@@ -292,9 +292,10 @@ button:hover {
 /* Container do Gráfico */
 .chart-container {
     flex: 1 1 45%;
-    max-width: 300px; /* Tamanho do gráfico */
+    max-width: 300px; 
     padding: 10px;
     text-align: center;
+    margin: 0 auto; 
 }
 
 .chart-container canvas {
@@ -396,26 +397,22 @@ button:hover {
 
 /* Ajustes para o gráfico em dispositivos móveis */
 @media (max-width: 768px) {
-    /* Título principal (garante que o título continue centralizado em dispositivos móveis) */
-    h1 {
-        font-size: 2.5em;
-    }
-
     /* Gráfico será maior e ficará em cima do texto */
     .chart-container {
         width: 100%; /* Faz o gráfico ocupar toda a largura disponível */
         max-width: none; /* Retira o limite de largura */
+        margin: 0 auto; /* Centraliza o gráfico no contêiner */
         margin-bottom: 20px; /* Adiciona espaço abaixo do gráfico */
     }
 
-    /* Mudança na explicação ao lado do gráfico */
+    /* Garantir que a explicação fique abaixo do gráfico */
     .result-explanation-container {
         flex-direction: column;
         align-items: center;
         padding: 10px;
     }
 
-    /* Torna o conteúdo explicativo também responsivo */
+    /* A explicação também vai se ajustar no layout de coluna em dispositivos móveis */
     .chart-explanation-content {
         display: flex;
         flex-direction: column;
