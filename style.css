@@ -14,6 +14,8 @@ h1 {
     color: #2E8B57;
     margin-bottom: 20px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    text-align: center; 
+
 }
 
 h2 {
@@ -392,24 +394,47 @@ button:hover {
     color: #D32F2F;
 }
 
-/* Ajuste para Layout Responsivo */
+/* Ajustes para o gráfico em dispositivos móveis */
 @media (max-width: 768px) {
-    .chart-and-explanation {
+    /* Título principal (garante que o título continue centralizado em dispositivos móveis) */
+    h1 {
+        font-size: 2.5em;
+    }
+
+    /* Gráfico será maior e ficará em cima do texto */
+    .chart-container {
+        width: 100%; /* Faz o gráfico ocupar toda a largura disponível */
+        max-width: none; /* Retira o limite de largura */
+        margin-bottom: 20px; /* Adiciona espaço abaixo do gráfico */
+    }
+
+    /* Mudança na explicação ao lado do gráfico */
+    .result-explanation-container {
         flex-direction: column;
         align-items: center;
         padding: 10px;
     }
 
-    .chart-container,
-    .result-explanation {
-        flex: 1 1 100%;
-        max-width: 100%;
-        margin-right: 0;
+    /* Torna o conteúdo explicativo também responsivo */
+    .chart-explanation-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 20px;
+        border: 2px solid #2E8B57;
+        border-radius: 8px;
     }
 
-    .tips-container, .calculators-container {
-        padding: 20px;
-        margin-left: 10px;
-        margin-right: 10px;
+    .result-explanation {
+        max-width: 100%;
+        margin-top: 10px;
+        font-size: 1.2em;
+        text-align: center;
+    }
+
+    /* Ajustar o tamanho das fontes e a distância para se ajustar melhor em telas menores */
+    .result-text {
+        font-size: 1.1em;
     }
 }
