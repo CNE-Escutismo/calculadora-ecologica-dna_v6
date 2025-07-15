@@ -239,14 +239,20 @@ button:hover {
 }
 
 .results-container {
-    max-width: 1200px;
-    margin: 40px auto;
+    display: flex;
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    align-items: center; /* Centraliza o conteúdo verticalmente */
+    flex-direction: row; /* Organiza o conteúdo em linha (lado a lado) */
+    flex-wrap: wrap; /* Permite que os itens se movam para a linha seguinte quando não cabem */
+    margin: 0 auto; /* Centraliza o container principal */
+    max-width: 1200px; /* Tamanho máximo para o contêiner */
     padding: 30px;
     background-color: #f9f9f9;
     border-radius: 10px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
 }
+
 
 /* Título Principal do Resultado */
 .result-title {
@@ -282,9 +288,11 @@ button:hover {
     display: flex;
     justify-content: space-between;
     width: 100%;
+    padding: 20px;
     background-color: #fff;
     border: 2px solid #2E8B57;
     border-radius: 8px;
+    box-sizing: border-box;
     padding: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -395,43 +403,35 @@ button:hover {
     color: #D32F2F;
 }
 
-/* Ajustes para o gráfico em dispositivos móveis */
+/* Ajustes para dispositivos móveis */
 @media (max-width: 768px) {
-    /* Gráfico será maior e ficará em cima do texto */
-    .chart-container {
-        width: 100%; /* Faz o gráfico ocupar toda a largura disponível */
-        max-width: none; /* Retira o limite de largura */
-        margin: 0 auto; /* Centraliza o gráfico no contêiner */
-        margin-bottom: 20px; /* Adiciona espaço abaixo do gráfico */
+    .results-container {
+        flex-direction: column; /* Muda o layout para coluna em dispositivos móveis */
+        align-items: center; /* Centraliza o conteúdo dentro do container */
+        padding: 20px; /* Ajusta o padding para dispositivos móveis */
     }
 
-    /* Garantir que a explicação fique abaixo do gráfico */
-    .result-explanation-container {
-        flex-direction: column;
-        align-items: center;
-        padding: 10px;
-    }
-
-    /* A explicação também vai se ajustar no layout de coluna em dispositivos móveis */
     .chart-explanation-content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
+        flex-direction: column; /* Organiza o gráfico e o texto explicativo em coluna */
+        width: 100%; /* Faz o conteúdo ocupar toda a largura disponível */
         padding: 20px;
         border: 2px solid #2E8B57;
         border-radius: 8px;
+        box-sizing: border-box;
     }
 
+    /* Ajusta o gráfico para ser maior em dispositivos móveis */
+    .chart-container {
+        width: 100%;
+        max-width: none; /* Remove o limite de largura */
+        margin: 0 auto; /* Centraliza o gráfico */
+        margin-bottom: 20px; /* Adiciona um espaço abaixo do gráfico */
+    }
+
+    /* Ajusta o conteúdo explicativo */
     .result-explanation {
-        max-width: 100%;
+        text-align: center;
         margin-top: 10px;
         font-size: 1.2em;
-        text-align: center;
-    }
-
-    /* Ajustar o tamanho das fontes e a distância para se ajustar melhor em telas menores */
-    .result-text {
-        font-size: 1.1em;
     }
 }
