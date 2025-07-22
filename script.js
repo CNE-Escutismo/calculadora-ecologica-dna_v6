@@ -209,7 +209,7 @@ function showResults() {
             "🚶‍♀️ Considera reduzir o uso de transporte individual. Partilhar boleias ou usar transportes públicos pode fazer uma grande diferença!",
             "🚲 Se possível, opta por deslocações a pé ou de bicicleta. São opções mais saudáveis e com baixo impacte ambiental.",
             "🚌 Se tens que usar transporte público, tenta combinar a viagem com outras pessoas. Assim, contribuis para reduzir o número de carros nas estradas.",
-            "🚗 Sempre que possível, planeja as deslocações para reduzir o tempo de viagem e as emissões de CO₂. Opta por viagens combinadas ou mais longas, se necessário.",
+            "🚗 Sempre que possível, planeia as deslocações para reduzir o tempo de viagem e as emissões de CO₂. Opta por viagens combinadas ou mais longas, se necessário.",
             "🛣️ Se possível, utiliza transportes ecológicos como veículos elétricos ou híbridos.",
             "🛑 Não te esqueças de promover o uso de transportes públicos e outras alternativas como as bicicletas partilhadas, sempre que possível. Reduz o impacte ambiental com escolhas mais conscientes."
         ],
@@ -225,7 +225,7 @@ function showResults() {
             "🥦 Opta por alimentos locais, biológicos e com menos embalagens. Pequenas escolhas fazem grande impacte!",
             "🌱 Comprar alimentos de produtores locais ou orgânicos reduz a pegada de carbono associada ao transporte e ao uso de pesticidas e fertilizantes químicos. Apoia a agricultura sustentável!",
             "🍎 Evitar alimentos altamente processados e optar por opções frescas e naturais também ajuda a diminuir o impacte ambiental. Explora alternativas vegetais sempre que possível, pois a produção animal tem um maior impacte ambiental.",
-            "🍽️ Reduz o desperdício de alimentos. Planeja bem as refeições e usa as sobras de maneira criativa para evitar desperdícios.",
+            "🍽️ Reduz o desperdício de alimentos. Planeia bem as refeições e usa as sobras de maneira criativa para evitar desperdícios.",
             "🍳 Opta por métodos de preparo de alimentos com baixo consumo de energia, como usar fornos solares, e assim aproveitar para fazer o projeto <strong>Scouts Go Solar</strong>. <a href='https://ambiente.escutismo.pt/projetos/earth-tribe/scouts-go-solar/' target='_blank'>Sabe mais aqui</a>",
             "🍴 Considera realizar atividades pedagógicas sobre alimentação sustentável. O projeto <strong>Escutismo.come</strong> incentiva boas escolhas alimentares com base em produtos locais. <a href='https://ambiente.escutismo.pt/projetos/escutismo-come/' target='_blank'>Sabe mais aqui</a>"
         ],
