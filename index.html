@@ -86,7 +86,7 @@
                 <!-- Slide 5 -->
                 <div class="slide orange-container question-container">
                     <div class="category">Deslocações</div>
-                    <div class="question open-ended">Número de veículos usado?</div>
+                    <div class="question open-ended">Qual foi o número de veículos usado?</div>
                     <input type="number" id="q4" min="0">
                     <button onclick="prevSlide()">Voltar atrás</button>
                     <button onclick="nextSlide()">Continuar</button>
@@ -106,9 +106,11 @@
                     <div class="category">Tipologia de Atividade</div>
                     <div class="question option">O que consideraste mais importante na escolha do local?</div>
                     <select id="q5">
-                        <option value="1">Sustentabilidade ambiental</option>
                         <option value="2">Distância</option>
-                        <option value="3">Paisagem</option>
+                        <option value="2">Tipo de pernoita: Acampamento</option>
+                        <option value="3">Tipo de pernoita: Acantonamento</option>
+                        <option value="2">Atividades especiais (ex: canoagem, vias ferratas, etc)</option>
+                        <option value="2">Ser num centro/campo escutista</option>
                     </select>
                     <button onclick="prevSlide()">Voltar atrás</button>
                     <button onclick="nextSlide()">Continuar</button>
@@ -119,9 +121,11 @@
                     <div class="category">Tipologia de Atividade</div>
                     <div class="question option">Que tipo de material utilizaste para jogos, comunicação, etc?</div>
                     <select id="q6">
-                        <option value="2">Material reciclado</option>
-                        <option value="3">Material novo</option>
-                        <option value="1">Material digital</option>
+                        <option value="2">Apenas material reciclado</option>
+                        <option value="4">Apenas material novo</option>
+                        <option value="1">Material reciclado e digital</option>
+                        <option value="3">Material novo e digital</option>
+
                     </select>
                     <button onclick="prevSlide()">Voltar atrás</button>
                     <button onclick="nextSlide()">Continuar</button>
@@ -130,9 +134,7 @@
                 <!-- Slide 9 -->
                 <div class="slide grey-container question-container">
                     <div class="category">Tipologia de Atividade</div>
-                    <div class="question option">A tua atividade vai ter t'shirts, outras peças ou objetos
-                        exclusivamente
-                        concebidos para a atividade (merchandising)?</div>
+                    <div class="question option">A tua atividade vai ter t-shirts, outras peças ou objetos exclusivamente concebidos para a atividade (merchandising)?</div>
                     <select id="q7">
                         <option value="2">Sim</option>
                         <option value="1">Não</option>
@@ -144,7 +146,7 @@
                 <!-- Slide 10 -->
                 <div class="slide grey-container question-container">
                     <div class="category">Tipologia de Atividade</div>
-                    <div class="question option">Realizaste alguma dinâmica ambiental durante a tua atividade?</div>
+                    <div class="question option">Realizaste alguma dinâmica ambiental durante a tua atividade? (ex: limpeza de áreas naturais, plantação de árvores, atividades de sensibilização ambiental, etc.)</div>
                     <select id="q8">
                         <option value="1">Sim</option>
                         <option value="2">Não</option>
@@ -234,10 +236,12 @@
                 <!-- Slide 17 -->
                 <div class="slide blue-container question-container">
                     <div class="category">Água</div>
-                    <div class="question option">Como lavaste a louça na tua atividade?</div>
+                    <div class="question option">Como lavaste a loiça na tua atividade?</div>
                     <select id="q13">
-                        <option value="2">Água corrente</option>
-                        <option value="1">Água em bacia</option>
+                        <option value="2">Com água corrente</option>
+                        <option value="1">Com água em bacia</option>
+                        <option value="3">Usei máquinas de lavar</option> 
+
                     </select>
                     <button onclick="prevSlide()">Voltar atrás</button>
                     <button onclick="nextSlide()">Continuar</button>
@@ -271,10 +275,10 @@
                     <div class="category">Energia</div>
                     <div class="question option">Que tipo de energias renováveis uitilizaste?</div>
                     <select id="q15">
+                        <option value="2">Não utilizei</option>
                         <option value="1">Hídrica</option>
                         <option value="1">Solar</option>
                         <option value="1">Eólica</option>
-                        <option value="2">Não utilizei</option>
                     </select>
                     <button onclick="prevSlide()">Voltar atrás</button>
                     <button onclick="nextSlide()">Continuar</button>
@@ -288,6 +292,7 @@
                     </div>
                     <select id="q16">
                         <option value="1">Energia solar</option>
+                        <option value="2">Energia elétrica proveniente da rede</option>
                         <option value="2">Gás</option>
                         <option value="3">Lenha</option>
                         <option value="4">Óleo</option>
@@ -304,6 +309,7 @@
                     <select id="q17">
                         <option value="4">Fogueira</option>
                         <option value="3">Lanterna a gás</option>
+                        <option value="2">Vela</option>
                         <option value="2">Lanterna elétrica</option>
                         <option value="1">Um símbolo representante do fogo</option>
                     </select>
@@ -328,7 +334,8 @@
                     </div>
                     <select id="q18">
                         <option value="1">Sacos de pano</option>
-                        <option value="3">Sacos de plástico</option>
+                        <option value="3">Sacos de plástico descartáveis</option>
+                        <option value="2">Sacos de plástico reutilizáveis</option>
                         <option value="2">Sacos de papel</option>
                     </select>
                     <button onclick="prevSlide()">Voltar atrás</button>
@@ -338,32 +345,38 @@
                 <!-- Slide 25 -->
                 <div class="slide purple-container question-container">
                     <div class="category">Resíduos</div>
-                    <div class="question option">Quanto foi a produção de resíduos na tua atividade?</div>
+                    <div class="question option">
+                        Qual foi o volume de resíduos gerados, considerando o número de pessoas e a duração da atividade?
+                    </div>
                     <select id="q19">
-                        <option value="1">Nenhuma</option>
-                        <option value="2">Quase nada (menos que 1 saco por equipa)</option>
-                        <option value="3">Alguma (1 saco por equipa)</option>
-                        <option value="4">Muita (mais que 1 saco por equipa)</option>
+                        <option value="1">Poucos resíduos (menos de 1 saco por equipa, por dia)</option> 
+                        <option value="2">Alguns resíduos (1 saco por equipa, por dia)</option>
+                        <option value="3">Muitos resíduos (mais de 1 saco por equipa, por dia)</option>
                     </select>
                     <button onclick="prevSlide()">Voltar atrás</button>
                     <button onclick="nextSlide()">Continuar</button>
                 </div>
 
+
                 <!-- Slide 26 -->
                 <div class="slide purple-container question-container">
                     <div class="category">Resíduos</div>
-                    <div class="question option">Quantos tipos de separação de lixo utilizaste?</div>
+                    <div class="question option">
+                        Quantos tipos diferentes de separação de resíduos foram feitos durante a tua atividade? 
+                        (Exemplos: Recicláveis, Orgânicos, Resíduos perigosos, Papel, Vidro, etc.)
+                    </div>
                     <select id="q20">
-                        <option value="4">Não separei</option>
-                        <option value="3">1 a 2</option>
-                        <option value="2">3 a 4</option>
-                        <option value="1">Mais de 4</option>
+                        <option value="1">Mais de 4 tipos de separação (ex: Recicláveis, Orgânicos, Vidro, Papel, Resíduos perigosos)</option>
+                        <option value="2">3 a 4 tipos de separação</option>
+                        <option value="3">1 a 2 tipos de separação</option>
+                        <option value="4">Nenhuma separação</option>
                     </select>
                     <button onclick="prevSlide()">Voltar atrás</button>
                     <button onclick="showResults()">Mostrar resultados</button>
                 </div>
-            </div>
 
+                
+            </div>
 
             <!-- Resultados -->
             <div id="results" style="display: none;">
@@ -401,6 +414,9 @@
 
                     <div class="calculators-container">
                         <h4 class="calculators-title">Explora mais sobre o teu impacte:</h4>
+                        <p>
+                        A calculadora que usaste foi criada pelo DNA para te ajudar a fazer uma breve ponderação da pegada ecológica da tua atividade. Embora seja uma ótima maneira de começar a refletir sobre as escolhas feitas, se quiseres um cálculo mais preciso e detalhado sobre as tuas pegadas de carbono, hídrica ou ecológica, há calculadoras profissionais desenvolvidas por organizações especializadas na área. Aqui estão algumas opções que podes explorar para obter uma análise mais aprofundada.
+                        </p>
                         <ul>
                             <li><a href="https://www.footprintcalculator.org/sponsor/FR/pt" target="_blank" class="calculators-link">🌍 Pegada Ecológica</a></li>
                             <li><a href="https://calculadora-pegada-co2.climatehero.org/" target="_blank" class="calculators-link">🌱 Pegada de Carbono</a></li>
