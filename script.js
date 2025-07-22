@@ -188,19 +188,82 @@ function showResults() {
 
     // Mensagens personalizadas por categoria
     const dicas = {
+
+        // Deslocações
         'Deslocações': "🚶‍♀️ Considera reduzir o uso de transporte individual. Partilhar boleias ou usar transportes públicos pode fazer uma grande diferença!",
+        
+        'Deslocações': "🚲 Se possível, opta por deslocações a pé ou de bicicleta. São opções mais saudáveis e com baixo impacte ambiental.",
+        
+        'Deslocações': "🚗 Sempre que possível, planeia as deslocações para reduzir o tempo de viagem e as emissões de CO₂. Opta por viagens combinadas ou mais longas, se necessário.",
+        
+        'Deslocações': "🛣️ Se possível, utiliza transportes ecológicos como veículos elétricos ou híbridos.",
+        
+        'Deslocações': "🛑 Não te esqueças de promover o uso de transportes públicos e outras alternativas como as bicicletas partilhadas, sempre que possível. Reduz o impacte ambiental com escolhas mais conscientes.",
+
+        // Tipologia de Atividade
         'Tipologia de Atividade': "📦 Pensa em formas de tornar as tuas atividades mais sustentáveis, como reutilizar materiais ou evitar merchandising desnecessário.",
+        
+        'Tipologia de Atividade': "🛠️ Sempre que possível, usa equipamentos e materiais reutilizáveis, para reduzir a produção de resíduos.",
+        
+        'Tipologia de Atividade': "♻️ Evita a compra de materiais novos e, em vez disso, reutiliza materiais de atividades passadas.",
+        
+        'Tipologia de Atividade': "💡 Planeia atividades que não envolvam grandes impactes ambientais. O uso de espaços naturais deve ser sempre feito com respeito ao ecossistema, minimizando danos.",
+        
+        'Tipologia de Atividade': "🔄 Se for necessário usar materiais, tenta sempre optar por opções recicláveis e de baixo impacte. O desafio <strong>Escolher Melhor</strong> da <strong>Earth Tribe</strong> promove hábitos sustentáveis! <a href='https://ambiente.escutismo.pt/projetos/earth-tribe/campeoes-da-natureza/' target='_blank'>Sabe mais aqui</a>",
+        
+        'Tipologia de Atividade': "🎒 Ao organizar atividades, considera o uso de recursos locais e reutilizáveis para diminuir a necessidade de transporte e o consumo de produtos descartáveis.",
+
+        // Alimentação
         'Alimentação': "🥦 Opta por alimentos locais, biológicos e com menos embalagens. Pequenas escolhas fazem grande impacte!",
-        'Água': "💧 Reutilizar água e usar métodos de lavagem mais eficientes ajuda a conservar este recurso precioso.",
-        'Energia': "🔋 Explora formas de usar energias renováveis e reduzir o consumo energético nas tuas atividades.",
-        'Resíduos': "♻️ Reduz, reutiliza e recicla sempre que possível. Uma boa separação de resíduos é essencial!",
+        
         'Alimentação': "🌱 Comprar alimentos de produtores locais ou orgânicos reduz a pegada de carbono associada ao transporte e ao uso de pesticidas e fertilizantes químicos. Apoia a agricultura sustentável!",
+        
         'Alimentação': "🍎 Evitar alimentos altamente processados e optar por opções frescas e naturais também ajuda a diminuir o impacte ambiental. Explora alternativas vegetais sempre que possível, pois a produção animal tem um maior impacte ambiental.",
+        
+        'Alimentação': "🍽️ Reduz o desperdício de alimentos. Planeia bem as refeições e usa as sobras de maneira criativa para evitar desperdícios.",
+        
+        'Alimentação': "🍳 Opta por métodos de preparo de alimentos com baixo consumo de energia, como usar fornos solares, e assim aproveitar para fazer o projeto <strong>Scouts Go Solar</strong>. <a href='https://ambiente.escutismo.pt/projetos/earth-tribe/scouts-go-solar/' target='_blank'>Sabe mais aqui</a>",
+        
+        'Alimentação': "🍴 Considera realizar atividades pedagógicas sobre alimentação sustentável. O projeto <strong>Escutismo.come</strong> incentiva boas escolhas alimentares com base em produtos locais. <a href='https://ambiente.escutismo.pt/projetos/escutismo-come/' target='_blank'>Sabe mais aqui</a>",
+
+        // Água
+        'Água': "💧 Reutilizar água e usar métodos de lavagem mais eficientes ajuda a conservar este recurso precioso.",
+        
         'Água': "🚰 Ao lavar alimentos, utiliza a água de maneira eficiente: usa recipientes para capturar a água usada e reaproveita para outras atividades, como regar plantas.",
+        
+        'Água': "💦 Sempre que possível, utiliza sistemas de recolha de água da chuva. É uma ótima forma de aproveitar a água para regar plantas e outras necessidades, sem sobrecarregar o consumo convencional.",
+        
+        'Água': "🌊 Para atividades perto de corpos d'água, evita usar sabões ou detergentes prejudiciais ao meio ambiente. Opta por opções biodegradáveis e sem químicos agressivos.",
+        
+        'Água': "🚰 Considera a instalação de sistemas de filtragem de água para reduzir o uso de garrafas plásticas e promover o consumo consciente de água.",
+        
+        'Água': "💧 Faz um projeto <strong>Maré de Mudança</strong> para aprender sobre a conservação da água e ajudar na preservação dos ecossistemas aquáticos. <a href='https://ambiente.escutismo.pt/projetos/earth-tribe/mare-de-mudanca/' target='_blank'>Sabe mais aqui</a>",
+
+        // Energia
+        'Energia': "🔋 Explora formas de usar energias renováveis e reduzir o consumo energético nas tuas atividades.",
+        
         'Energia': "🌞 A utilização de fontes renováveis de energia, como solar ou eólica, pode diminuir significativamente o impacte das atividades. Se possível, usa essas fontes para alimentar equipamentos e iluminação.",
+        
+        'Energia': "💡 Sempre que possível, desliga os aparelhos eletrónicos quando não estiverem em uso. A economia de energia é uma forma simples de reduzir o impacte ambiental.",
+        
+        'Energia': "🌞 Se possível, opta por alternativas como cozinhar com energia solar, como o desafio <strong>Scouts Go Solar</strong> promove. <a href='https://ambiente.escutismo.pt/projetos/earth-tribe/scouts-go-solar/' target='_blank'>Sabe mais aqui</a>",
+        
+        'Energia': "⚡ Para reduzir o impacte, considera usar lanternas a energia solar durante atividades ao ar livre, promovendo o uso de energias limpas e renováveis.",
+
+        // Resíduos
+        'Resíduos': "♻️ Reduz, reutiliza e recicla sempre que possível. Uma boa separação de resíduos é essencial!",
+        
         'Resíduos': "🚮 Uma boa prática de separação de resíduos é crucial. Separa os resíduos recicláveis, como plásticos, vidros e papéis, e reencaminha-os corretamente. A compostagem de resíduos orgânicos também é uma excelente forma de reduzir a quantidade de lixo enviado para aterros.",
-        'Resíduos': "🛍️ Evita o uso de sacos plásticos descartáveis. Usa sacos de pano, papel ou material reciclado para transportar alimentos e materiais. Sempre que possível, reutiliza embalagens e recipientes."
+        
+        'Resíduos': "🛍️ Evita o uso de sacos plásticos descartáveis. Usa sacos de pano, papel ou material reciclado para transportar alimentos e materiais. Sempre que possível, reutiliza embalagens e recipientes.",
+        
+        'Resíduos': "🌍 Participa em atividades de limpeza costeira, como o <strong>Mês do Mar</strong>, para ajudar a preservar as nossas praias e oceanos. Menos lixo nas praias significa mais vida marinha.",
+        
+        'Resíduos': "🌿 Opta por materiais naturais e recicláveis em vez de plásticos. A escolha de produtos com menos embalagens ajuda a reduzir a pegada ambiental e a promover um consumo consciente.",
+        
+        'Resíduos': "📦 Aproveita o conceito de economia circular: troca, reutiliza e recicla o que for possível. Participa no projeto <strong>Green Cork</strong>, onde a recolha de rolhas de cortiça contribui para o plantio de árvores. <a href='https://ambiente.escutismo.pt/projetos/green-cork/' target='_blank'>Sabe mais aqui</a>"
     };
+
 
     // Exibir as 3 dicas com maior impacto
     let dicasTop3 = top3.map(item => `${categorias[item.index]}: ${dicas[categorias[item.index]]}`).join("<br>");
