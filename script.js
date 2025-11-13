@@ -196,54 +196,72 @@ function showResults() {
   }
 
   // --- GRÁFICO ---
-  if (chartWrap) chartWrap.style.display = 'block';  
+  if (chartWrap) chartWrap.style.display = 'block';
+
+  const canvas = results.querySelector('#footprintChart');
   if (canvas) {
+    // destruir gráfico anterior se existir
     if (window.footprintChart) {
       try { window.footprintChart.destroy(); } catch (e) {}
       window.footprintChart = null;
     }
 
-    const recreateCanvas = () => {
-      const newCanvas = document.createElement('canvas');
-      newCanvas.id = 'footprintChart';
-      newCanvas.width  = 400;  
-      newCanvas.height = 400;
-      canvas.replaceWith(newCanvas);
-      return newCanvas.getContext('2d');
-    };
+    const labels = ['Deslocações', 'Tipologia de Atividade', 'Alimentação', 'Água', 'Energia', 'Resíduos'];
+    const values = [deslocacoes, tipologia, alimentacao, agua, energia, residuos];
+    const colors = ['#FFA500', '#868686', '#2E8B57', '#4682B4', '#FFD700', '#800080'];
 
+    // Ajusta a altura do canvas ao nº de categorias (barras) para não “apertar”
+    // ~44px por barra dá uma boa legibilidade
+    canvas.height = labels.length * 44;
+
+    // Adia 1 frame para garantir layout aplicado
     requestAnimationFrame(() => {
-      let ctx = canvas.getContext('2d');
-      if (!ctx) {
-        ctx = recreateCanvas();
-      }
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
 
-      if (!ctx) {
-        console.warn('Canvas context não disponível – gráfico não criado.');
-        return;
-      }
-
-      try {
-        window.footprintChart = new Chart(ctx, {
-          type: 'pie',
-          data: {
-            labels: ['Deslocações', 'Tipologia de Atividade', 'Alimentação', 'Água', 'Energia', 'Resíduos'],
-            datasets: [{
-              data: [deslocacoes, tipologia, alimentacao, agua, energia, residuos],
-              backgroundColor: ['#FFA500', '#868686', '#2E8B57', '#4682B4', '#FFD700', '#800080'],
-              hoverOffset: 10
-            }]
+      window.footprintChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Pontuação',
+            data: values,
+            backgroundColor: colors,
+            borderWidth: 0,
+            borderRadius: 8,
+            barThickness: 28
+          }]
+        },
+        options: {
+          indexAxis: 'y',              // barras horizontais
+          responsive: true,
+          maintainAspectRatio: false,  // respeita a altura que definimos no canvas
+          scales: {
+            x: {
+              beginAtZero: true,
+              ticks: { stepSize: 2 },  // ajusta se quiseres 1 em 1
+              grid: { color: 'rgba(0,0,0,0.06)' }
+            },
+            y: {
+              grid: { display: false }
+            }
           },
-          options: {
-            maintainAspectRatio: true,
-            responsive: true
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` ${ctx.raw}`
+              }
+            }
+          },
+          animation: {
+            duration: 350
           }
-        });
-      } catch (e) {
-        console.error('Erro a criar o gráfico:', e);
-      }
+        }
+      });
     });
   }
+
 
 
   // Dicas — Top 3 pelas categorias mais altas
@@ -321,3 +339,4 @@ function showResults() {
     tipEl.style.display = 'block';
   }
 }
+
