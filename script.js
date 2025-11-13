@@ -193,7 +193,7 @@ function showResults() {
     resultCOEl.innerHTML = `🚗 Emissões de deslocação: <strong>${kgFmt} kg CO₂</strong>`;
   }
 
-  /* ===== Gráfico de Barras ===== */
+  /* ===== Gráfico de Barras (Horizontal) ===== */
   if (chartWrap) chartWrap.style.display = 'block';
 
   if (canvas) {
@@ -206,9 +206,6 @@ function showResults() {
     const labels = ['Deslocações', 'Tipologia de Atividade', 'Alimentação', 'Água', 'Energia', 'Resíduos'];
     const values = [deslocacoes, tipologia, alimentacao, agua, energia, residuos];
     const colors = ['#FFA500', '#868686', '#2E8B57', '#4682B4', '#FFD700', '#800080'];
-
-    // altura proporcional ao nº de barras
-    canvas.height = labels.length * 44;
 
     requestAnimationFrame(() => {
       const ctx = canvas.getContext('2d');
@@ -228,9 +225,9 @@ function showResults() {
           }]
         },
         options: {
-          indexAxis: 'y',
+          indexAxis: 'y',              // ← barras horizontais
           responsive: true,
-          maintainAspectRatio: false,
+          maintainAspectRatio: false,  // deixa o gráfico ocupar a altura disponível
           scales: {
             x: {
               beginAtZero: true,
