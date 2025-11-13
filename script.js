@@ -115,7 +115,6 @@ function calcularCO2DeslocacaoKg() {
 
 /* ===== Resultados ===== */
 function showResults() {
-  // Selecionar SEMPRE dentro do #results (evita apanhar um bloco invisível por engano)
   const results = document.getElementById('results');
   const slidesWrap = document.getElementById('slides');
   if (!results) return;
@@ -128,8 +127,7 @@ function showResults() {
   // Deslocações (índice p/ score + kg p/ mostrar)
   const indiceDesloc = calcularImpactoDeslocacaoIndice();
   const kgDesloc     = calcularCO2DeslocacaoKg();
-
-  const deslocacoes = indiceDesloc;
+  const deslocacoes  = indiceDesloc;
 
   // Tipologia
   let tipologia = 0;
@@ -187,7 +185,7 @@ function showResults() {
   if (resultEl) {
     resultEl.innerHTML =
       `O valor é de <span class="result-highlight">${total}</span>, ` +
-      `logo a tua ponderação é <span class="status ${statusClass}">${message}</span>`;
+      `logo a tua ponderação é <span class="status ${statusClass}">${message}</span>.`;
   }
 
   if (resultCOEl) {
@@ -195,10 +193,9 @@ function showResults() {
     resultCOEl.innerHTML = `🚗 Emissões de deslocação: <strong>${kgFmt} kg CO₂</strong>`;
   }
 
-  // --- GRÁFICO ---
+  /* ===== Gráfico de Barras ===== */
   if (chartWrap) chartWrap.style.display = 'block';
 
-  const canvas = results.querySelector('#footprintChart');
   if (canvas) {
     // destruir gráfico anterior se existir
     if (window.footprintChart) {
@@ -210,11 +207,9 @@ function showResults() {
     const values = [deslocacoes, tipologia, alimentacao, agua, energia, residuos];
     const colors = ['#FFA500', '#868686', '#2E8B57', '#4682B4', '#FFD700', '#800080'];
 
-    // Ajusta a altura do canvas ao nº de categorias (barras) para não “apertar”
-    // ~44px por barra dá uma boa legibilidade
+    // altura proporcional ao nº de barras
     canvas.height = labels.length * 44;
 
-    // Adia 1 frame para garantir layout aplicado
     requestAnimationFrame(() => {
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
@@ -233,13 +228,13 @@ function showResults() {
           }]
         },
         options: {
-          indexAxis: 'y',              // barras horizontais
+          indexAxis: 'y',
           responsive: true,
-          maintainAspectRatio: false,  // respeita a altura que definimos no canvas
+          maintainAspectRatio: false,
           scales: {
             x: {
               beginAtZero: true,
-              ticks: { stepSize: 2 },  // ajusta se quiseres 1 em 1
+              ticks: { stepSize: 2 },
               grid: { color: 'rgba(0,0,0,0.06)' }
             },
             y: {
@@ -262,9 +257,7 @@ function showResults() {
     });
   }
 
-
-
-  // Dicas — Top 3 pelas categorias mais altas
+  /* ===== Dicas — Top 3 ===== */
   const categorias = ['Deslocações', 'Tipologia de Atividade', 'Alimentação', 'Água', 'Energia', 'Resíduos'];
   const valores    = [deslocacoes, tipologia, alimentacao, agua, energia, residuos];
 
@@ -328,7 +321,6 @@ function showResults() {
     ]
   };
 
-
   if (tipEl) {
     const top3Dicas = top3.map(item => {
       const cat = categorias[item.index];
@@ -339,4 +331,3 @@ function showResults() {
     tipEl.style.display = 'block';
   }
 }
-
