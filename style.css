@@ -191,13 +191,20 @@ button.secondary:hover { background: #1c4f2e; }
   margin-top: 18px;
   flex-wrap: wrap;
 }
+
 .chart-container {
-  flex: 0 1 240px;
-  max-width: 240px;
+  flex: 1 1 420px;
+  max-width: 620px;
   margin: 0 auto;
   text-align: center;
 }
-.chart-container canvas { width: 100% !important; height: auto !important; }
+
+.chart-container canvas {
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+}
+
 
 /* ===== Container “Explora mais” ===== */
 .calculators-container {
@@ -387,5 +394,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   font-style: italic;
   opacity: 0.9;
 }
+
 
 
