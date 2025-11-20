@@ -6,7 +6,6 @@ function goToSlide(index) {
   currentSlide = index;
   showSlide(currentSlide);
 
-  // Sempre que se volta aos slides, esconde o bloco final
   const results = document.getElementById('results');
   if (results) results.style.display = 'none';
   const slidesWrap = document.getElementById('slides');
@@ -197,7 +196,6 @@ function showResults() {
   if (chartWrap) chartWrap.style.display = 'block';
 
   if (canvas) {
-    // destruir gráfico anterior se existir
     if (window.footprintChart) {
       try { window.footprintChart.destroy(); } catch (e) {}
       window.footprintChart = null;
@@ -206,6 +204,10 @@ function showResults() {
     const labels = ['Deslocações', 'Tipologia de Atividade', 'Alimentação', 'Água', 'Energia', 'Resíduos'];
     const values = [deslocacoes, tipologia, alimentacao, agua, energia, residuos];
     const colors = ['#FFA500', '#868686', '#2E8B57', '#4682B4', '#FFD700', '#800080'];
+
+    // dá altura suficiente para não sobrepor as labels (≈ 44px por barra)
+    const rowHeight = 44;
+    canvas.height = labels.length * rowHeight;
 
     requestAnimationFrame(() => {
       const ctx = canvas.getContext('2d');
@@ -225,9 +227,9 @@ function showResults() {
           }]
         },
         options: {
-          indexAxis: 'y',              // ← barras horizontais
+          indexAxis: 'y',              // barras horizontais
           responsive: true,
-          maintainAspectRatio: false,  // deixa o gráfico ocupar a altura disponível
+          maintainAspectRatio: false,
           scales: {
             x: {
               beginAtZero: true,
@@ -235,7 +237,10 @@ function showResults() {
               grid: { color: 'rgba(0,0,0,0.06)' }
             },
             y: {
-              grid: { display: false }
+              grid: { display: false },
+              ticks: {
+                font: { size: 12 }
+              }
             }
           },
           plugins: {
