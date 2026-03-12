@@ -1,5 +1,6 @@
 let currentSlide = 0;
 const slides = document.querySelectorAll('.slide');
+const checkpointEls = document.querySelectorAll('.progress-checkpoints span');
 
 /* ===== Navegação ===== */
 function goToSlide(index) {
@@ -31,10 +32,23 @@ function showSlide(index) {
 }
 
 function revealCheckpoints(currentIndex) {
-  const checkpoints = [0, 4, 9, 13, 17, 21];
-  checkpoints.forEach(i => {
-    const cp = document.getElementById(`cp-${i}`);
-    if (cp && currentIndex >= i) cp.classList.add('visible');
+  checkpointEls.forEach((cp) => {
+    const idx = parseInt(cp.dataset.index || '0', 10);
+    if (currentIndex >= idx) cp.classList.add('visible');
+  });
+}
+
+function positionCheckpoints() {
+  const total = Math.max(slides.length - 1, 1);
+  const container = document.getElementById('progress-bar-container');
+  const paddingPx = 12;
+  const widthPx = container ? container.clientWidth : 0;
+  const innerWidth = Math.max(widthPx - paddingPx * 2, 1);
+  checkpointEls.forEach((cp) => {
+    const idx = parseInt(cp.dataset.index || '0', 10);
+    const pct = idx / total;
+    const leftPx = paddingPx + innerWidth * pct;
+    cp.style.left = `${leftPx}px`;
   });
 }
 
@@ -61,6 +75,9 @@ function updateProgressBar(index) {
   const bar = document.getElementById('progress-bar');
   if (bar) bar.style.width = `${progress}%`;
 }
+
+positionCheckpoints();
+window.addEventListener('resize', positionCheckpoints);
 
 /* ===== Pontuação ===== */
 function classificarRefeicoesVegetarianas(vegetarianas, total) {
