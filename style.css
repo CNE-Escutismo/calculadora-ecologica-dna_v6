@@ -307,9 +307,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 
 /* Garantir gráfico menor e título centrado (reforço) */
 .result-title { text-align: center; }
-.chart-container { flex: 0 1 320px; max-width: 320px; }
+.chart-container { flex: 0 1 240px; max-width: 240px; }
 @media (max-width: 768px) {
-  .chart-container { flex-basis: 280px; max-width: 280px; }
+  .chart-container { flex-basis: 220px; max-width: 220px; }
 }
 
 /* Texto do resultado + badges coloridas */
@@ -394,7 +394,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   font-style: italic;
   opacity: 0.9;
 }
-
 
 
 
