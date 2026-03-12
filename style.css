@@ -35,16 +35,16 @@ body {
 .progress-checkpoints {
   position: absolute;
   inset: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 12px;
+  display: block;
   z-index: 2;
 }
 .progress-checkpoints span {
   width: 26px;
   height: 26px;
   display: inline-flex;
+  position: absolute;
+  top: 50%;
+  left: 0;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
@@ -52,12 +52,12 @@ body {
   color: #fff;
   background: transparent;
   opacity: 0;
-  transform: translateY(0);
+  transform: translate(-50%, -50%);
   transition: transform .2s ease, opacity .2s ease;
   cursor: pointer;
 }
 .progress-checkpoints span.visible { opacity: 1; }
-.progress-checkpoints span:hover { transform: scale(1.1); }
+.progress-checkpoints span:hover { transform: translate(-50%, -50%) scale(1.1); }
 
 /* ===== Cards ===== */
 #home, #slides .slide, #results, .calculators-container {
