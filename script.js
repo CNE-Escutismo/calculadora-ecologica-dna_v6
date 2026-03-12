@@ -275,8 +275,8 @@ function showResults() {
     });
   }
 
-/* ===== Dicas — 1 aleatória por categoria ===== */
-const labels = ['Deslocações', 'Tipologia de Atividade', 'Alimentação', 'Água', 'Energia', 'Resíduos'];
+  /* ===== Dicas — 1 aleatória por categoria ===== */
+  const categorias = ['Deslocações', 'Tipologia de Atividade', 'Alimentação', 'Água', 'Energia', 'Resíduos'];
 
 const dicas = {
   'Deslocações': [
@@ -355,5 +355,3 @@ const dicas = {
     tipEl.style.display = 'block';
   }
 }
-
-
