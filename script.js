@@ -1,402 +1,367 @@
-/* ===== Reset & Base ===== */
-* { box-sizing: border-box; }
-html, body { height: 100%; margin: 0; }
-body {
-  font-family: 'Poppins', sans-serif;
-  background: transparent !important;
-  color: #333;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 16px;
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const checkpointEls = document.querySelectorAll('.progress-checkpoints span');
+
+/* ===== Navegação ===== */
+function goToSlide(index) {
+  currentSlide = index;
+  showSlide(currentSlide);
+
+  const results = document.getElementById('results');
+  if (results) results.style.display = 'none';
+  const slidesWrap = document.getElementById('slides');
+  if (slidesWrap) slidesWrap.style.display = 'block';
 }
 
-/* ===== Progress Bar (ícones dentro da barra, brancos e centrados) ===== */
-#progress-bar-container {
-  position: relative;
-  width: 100%;
-  max-width: 1200px;
-  margin: 12px auto 28px;
-  height: 22px;
-  background: #e9f3ef;
-  border-radius: 999px;
-  overflow: hidden;
-}
-#progress-bar {
-  position: absolute;
-  inset: 0 auto 0 0;
-  height: 100%;
-  width: 0%;
-  background: #0a8a5a;
-  border-radius: 999px;
-  transition: width .4s ease;
-  z-index: 1;
-}
-.progress-checkpoints {
-  position: absolute;
-  inset: 0;
-  display: block;
-  z-index: 2;
-}
-.progress-checkpoints span {
-  width: 26px;
-  height: 26px;
-  display: inline-flex;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 14px;
-  color: #fff;
-  background: transparent;
-  opacity: 0;
-  transform: translate(-50%, -50%);
-  transition: transform .2s ease, opacity .2s ease;
-  cursor: pointer;
-}
-.progress-checkpoints span.visible { opacity: 1; }
-.progress-checkpoints span:hover { transform: translate(-50%, -50%) scale(1.1); }
-
-/* ===== Cards ===== */
-#home, #slides .slide, #results, .calculators-container {
-  background: #fff;
-  width: 100%;
-  max-width: 1100px;
-  border-radius: 16px;
-  padding: 28px;
-  box-shadow: 0 12px 28px rgba(0,0,0,.08);
-  transition: transform .25s, box-shadow .25s;
-  margin: 10px auto;
-}
-#home:hover, #slides .slide:hover, #results:hover, .calculators-container:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 18px 38px rgba(0,0,0,.12);
+function startQuiz() {
+  const home = document.getElementById('home');
+  if (home) home.style.display = 'none';
+  showSlide(1);
 }
 
-h1 { font-weight: 700; font-size: 2rem; margin: 0 0 8px; color: #0f5c3e; }
-h2 { font-weight: 600; font-size: 1.4rem; margin: 0 0 14px; color: #0f5c3e; }
-p  { margin: 0 0 12px; line-height: 1.6; }
-
-#resultArvores { font-size: 0.9em; text-align: center; }
-
-/* ===== Intro (primeiro ecrã) centrado ===== */
-#home .intro-container { text-align: center; }
-#home .intro-container button { margin-left: auto; margin-right: auto; display: inline-flex; }
-
-/* ===== Etiquetas das categorias com cor do tipo de slide ===== */
-.category {
-  display: inline-block;
-  font-size: .95rem;
-  font-weight: 600;
-  border-radius: 999px;
-  padding: 6px 14px;
-  margin-bottom: 10px;
-  background: #e9f3ef;
-  color: #0f5c3e;
-}
-.orange-container .category { background: rgba(255,165,0,.15);  color: #cc7a00; }
-.grey-container   .category { background: rgba(120,120,120,.15); color: #4a4a4a; }
-.blue-container   .category { background: rgba(30,144,255,.15);  color: #1f6fbf; }
-.green-container  .category { background: rgba(46,139,87,.15);   color: #1e7f57; }
-.purple-container .category { background: rgba(128,0,128,.15);   color: #7a2e7a; }
-.yellow-container .category { background: rgba(255,215,0,.15);   color: #a38400; }
-
-/* títulos coerentes com a categoria */
-.orange-container h2 { color: #cc7a00; }
-.grey-container   h2 { color: #4a4a4a; }
-.blue-container   h2 { color: #1f6fbf; }
-.green-container  h2 { color: #1e7f57; }
-.purple-container h2 { color: #7a2e7a; }
-.yellow-container h2 { color: #a38400; }
-
-/* ===== Perguntas, Inputs e Seletores ===== */
-.question-container .question {
-  font-size: 1.1rem;
-  margin: 8px 0 12px;
-  animation: fadeIn .35s ease both;
-  text-align: center;
-}
-input[type="number"], select {
-  width: 100%;
-  max-width: 340px;
-  padding: 12px 14px;
-  margin: 8px auto 16px auto;
-  border: 1px solid #dfe7e3;
-  border-radius: 10px;
-  background: #fff;
-  font-size: 1rem;
-  outline: none;
-  display: block;
-  transition: box-shadow .2s, border-color .2s;
-}
-input[type="number"]:focus, select:focus {
-  border-color: #0a8a5a;
-  box-shadow: 0 0 0 4px rgba(10,138,90,.15);
+function showSlide(index) {
+  slides.forEach((slide) => {
+    slide.classList.remove('active');
+    slide.style.display = 'none';
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  slides[index].style.display = 'block';
+  setTimeout(() => slides[index].classList.add('active'), 10);
+  updateProgressBar(index);
+  revealCheckpoints(index);
 }
 
-/* ===== Botões ===== */
-button {
-  appearance: none;
-  border: none;
-  border-radius: 12px;
-  padding: 12px 18px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  background: #0a8a5a;
-  color: #fff;
-  margin: 8px 6px 0;
-  transition: transform .18s, background-color .2s, box-shadow .2s;
-  box-shadow: 0 8px 18px rgba(10,138,90,.22);
-}
-button:hover { background: #096c47; transform: translateY(-2px); box-shadow: 0 12px 22px rgba(9,108,71,.26); }
-button:active { transform: translateY(0); }
-button.secondary { background: #2c6f43; }
-button.secondary:hover { background: #1c4f2e; }
-
-/* botões centrados em todos os slides */
-#slides .slide { text-align: center; }
-#slides .slide button { display: inline-flex; align-items: center; justify-content: center; }
-
-/* ===== Resultados e Dicas ===== */
-#results .result-summary, .result-explanation, .tips-container {
-  background: #fff;
-  border: 1px solid #e2eee8;
-  border-radius: 12px;
-  padding: 20px;
-  margin-top: 18px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  text-align: left;
-}
-#results h2, #result, #resultCO { text-align: center; }
-
-.tips-title { margin: 0 0 8px; font-weight: 600; color: #0f5c3e; font-size: 1.1rem; }
-.tip-item   { margin: 8px 0; }
-.sustainable, .unsustainable {
-  display: inline-block;
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-size: .85rem;
-  font-weight: 600;
-}
-.sustainable   { background: #e6f7ef; color: #1e7f57; }
-.unsustainable { background: #ffe8e6; color: #b13a2d; }
-
-/* ===== Gráfico ===== */
-.chart-and-explanation {
-  display: flex;
-  gap: 18px;
-  align-items: stretch;
-  justify-content: center;
-  margin-top: 18px;
-  flex-wrap: wrap;
+function revealCheckpoints(currentIndex) {
+  checkpointEls.forEach((cp) => {
+    const idx = parseInt(cp.dataset.index || '0', 10);
+    if (currentIndex >= idx) cp.classList.add('visible');
+  });
 }
 
-.chart-container {
-  flex: 1 1 420px;
-  max-width: 620px;
-  margin: 0 auto;
-  text-align: center;
+function positionCheckpoints() {
+  const total = Math.max(slides.length - 1, 1);
+  const container = document.getElementById('progress-bar-container');
+  const paddingPx = 12;
+  const widthPx = container ? container.clientWidth : 0;
+  const innerWidth = Math.max(widthPx - paddingPx * 2, 1);
+  checkpointEls.forEach((cp) => {
+    const idx = parseInt(cp.dataset.index || '0', 10);
+    const pct = idx / total;
+    const leftPx = paddingPx + innerWidth * pct;
+    cp.style.left = `${leftPx}px`;
+  });
 }
 
-.chart-container canvas {
-  width: 100% !important;
-  height: auto !important;
-  display: block;
+function nextSlide() {
+  if (currentSlide < slides.length - 1) {
+    currentSlide++;
+    showSlide(currentSlide);
+  }
 }
 
-
-/* ===== Container “Explora mais” ===== */
-.calculators-container {
-  background: #fff;
-  border: 1px solid #e2eee8;
-  border-radius: 12px;
-  padding: 20px;
-  margin-top: 18px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  text-align: left;
-}
-.calculators-container h3 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #0f5c3e;
-  margin-bottom: 10px;
-}
-.calculators-container p {
-  margin-bottom: 14px;
-  line-height: 1.6;
-  color: #333;
+function prevSlide() {
+  if (currentSlide > 0) {
+    currentSlide--;
+    showSlide(currentSlide);
+  } else {
+    const home = document.getElementById('home');
+    if (home) home.style.display = 'block';
+    slides[currentSlide].style.display = 'none';
+  }
 }
 
-/* Links/botões verdes */
-.calculators-link {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
-  text-align: left;
-}
-.calculators-link a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 16px;
-  border-radius: 12px;
-  background: #e9f3ef;
-  color: #0f5c3e;
-  font-weight: 600;
-  text-decoration: none;
-  transition: transform .2s, background-color .2s, box-shadow .2s;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
-}
-.calculators-link a:hover {
-  background: #d6ece3;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 18px rgba(0,0,0,0.10);
+function updateProgressBar(index) {
+  const progress = ((index + 1) / slides.length) * 100;
+  const bar = document.getElementById('progress-bar');
+  if (bar) bar.style.width = `${progress}%`;
 }
 
-/* ===== Animações ===== */
-@keyframes fadeIn { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: translateY(0);} }
-@keyframes shake  { 0%{transform:translateX(0)}25%{transform:translateX(-4px)}50%{transform:translateX(4px)}75%{transform:translateX(-4px)}100%{transform:translateX(0)} }
-@keyframes pulse  { 0%{transform:scale(1)}50%{transform:scale(1.04)}100%{transform:scale(1)} }
-.is-correct   { animation: pulse .45s ease-in-out; background:#4CAF50!important; color:#fff!important; }
-.is-incorrect { animation: shake .45s ease-out;   background:#FF6347!important; color:#fff!important; }
+positionCheckpoints();
+window.addEventListener('resize', positionCheckpoints);
 
-/* ===== Slide Visibility ===== */
-.slide { display: none; opacity: 0; }
-.slide.active { display: block; animation: fadeIn .35s ease both; }
-
-/* ===== Resultados — ajustes pedidos ===== */
-.result-title { text-align: center; margin-bottom: 8px; }
-#result, #resultCO { text-align: center; font-size: 1.05rem; }
-.result-highlight { font-size: 1.3rem; font-weight: 700; }
-.status { display: inline-block; padding: 4px 12px; border-radius: 999px; font-weight: 700; line-height: 1.1; margin-left: 4px; }
-.status-low  { background: #e6f7ef; color: #1e7f57; }  /* Baixa */
-.status-mid  { background: #fff7e6; color: #a36a00; }  /* Moderada */
-.status-high { background: #ffe8e6; color: #b13a2d; }  /* Alta */
-.result-explanation h3 { font-size: 1.1rem; font-weight: 600; color: #0f5c3e; margin: 0 0 8px; }
-
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-  #home, #slides .slide, #results, .calculators-container { padding: 22px; border-radius: 12px; }
-  h1 { font-size: 1.7rem; }
-  h2 { font-size: 1.25rem; }
-  .chart-container { max-width: 220px; }
+/* ===== Pontuação ===== */
+function classificarRefeicoesVegetarianas(vegetarianas, total) {
+  if (total === 0) return 4;
+  const p = vegetarianas / total;
+  if (p === 0)   return 4;
+  if (p <= 0.2)  return 3;
+  if (p <= 0.5)  return 2;
+  return 1;
 }
 
-/* ===== Accessibility Focus ===== */
-button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(10,138,90,.18);
-  border-color: #0a8a5a;
+// Índice (0–4) para uso no score
+function calcularImpactoDeslocacaoIndice() {
+  const pessoas   = parseFloat(document.getElementById('q1')?.value) || 0;
+  const distancia = parseFloat(document.getElementById('q2')?.value) || 0;
+  const veiculos  = parseInt(document.getElementById('q4')?.value) || 0;
+  const tipo      = parseInt(document.getElementById('q3')?.value) || 0;
+
+  const fatores = { 0: 0.00, 1: 0.03, 2: 0.05, 3: 0.21 };
+  if (pessoas === 0 || veiculos === 0) return 0;
+
+  const impacto = (distancia / (pessoas * veiculos)) * (fatores[tipo] || 0);
+
+  if (impacto <= 0.05) return 0;
+  if (impacto <= 0.10) return 1;
+  if (impacto <= 0.20) return 2;
+  if (impacto <= 0.30) return 3;
+  return 4;
 }
 
-/* Efeito hover apenas nas secções secundárias */
-.tips-container,
-.result-explanation,
-.calculators-container {
-  transition: transform .25s, box-shadow .25s;
+// kg CO2 para mostrar (aproximação simples)
+function calcularCO2DeslocacaoKg() {
+  const pessoas   = parseFloat(document.getElementById('q1')?.value) || 0;
+  const distancia = parseFloat(document.getElementById('q2')?.value) || 0;
+  let veiculos    = parseInt(document.getElementById('q4')?.value) || 0;
+  const tipo      = parseInt(document.getElementById('q3')?.value) || 0;
+
+  const F_TREM_PPKM = 0.03;
+  const F_BUS_PPKM  = 0.05;
+  const F_CARRO_VKM = 0.21;
+
+  if (tipo === 0) return 0; // a pé/bicicleta
+  if (tipo === 1) return distancia * pessoas * F_TREM_PPKM;
+  if (tipo === 2) return distancia * pessoas * F_BUS_PPKM;
+  if (tipo === 3) {
+    if (veiculos <= 0) veiculos = 1;
+    return distancia * veiculos * F_CARRO_VKM;
+  }
+  return 0;
 }
 
-.tips-container:hover,
-.result-explanation:hover,
-.calculators-container:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 18px 38px rgba(0,0,0,.12);
+/* ===== Resultados ===== */
+function showResults() {
+  const results = document.getElementById('results');
+  const slidesWrap = document.getElementById('slides');
+  if (!results) return;
+
+  // Alimentação
+  const vegetarianas   = parseInt(document.getElementById('q11_vegetarianas')?.value) || 0;
+  const totalRefeicoes = parseInt(document.getElementById('q11_total')?.value) || 0;
+  const scoreRefeicoes = classificarRefeicoesVegetarianas(vegetarianas, totalRefeicoes);
+
+  // Deslocações (índice p/ score + kg p/ mostrar)
+  const indiceDesloc = calcularImpactoDeslocacaoIndice();
+  const kgDesloc     = calcularCO2DeslocacaoKg();
+  const arvores      = Math.round(kgDesloc / 22);
+  const deslocacoes  = indiceDesloc;
+
+  // Tipologia
+  let tipologia = 0;
+  tipologia += parseInt(document.getElementById('q5')?.value) || 0;
+  tipologia += parseInt(document.getElementById('q6')?.value) || 0;
+  tipologia += parseInt(document.getElementById('q7')?.value) || 0;
+  tipologia += parseInt(document.getElementById('q8')?.value) || 0;
+
+  // Alimentação (resto)
+  let alimentacao = scoreRefeicoes;
+  alimentacao += parseInt(document.getElementById('q9')?.value) || 0;
+  alimentacao += parseInt(document.getElementById('q10')?.value) || 0;
+
+  // Água
+  let agua = 0;
+  agua += parseInt(document.getElementById('q12')?.value) || 0;
+  agua += parseInt(document.getElementById('q13')?.value) || 0;
+  agua += parseInt(document.getElementById('q14')?.value) || 0;
+
+  // Energia
+  let energia = 0;
+  energia += parseInt(document.getElementById('q15')?.value) || 0;
+  energia += parseInt(document.getElementById('q16')?.value) || 0;
+  energia += parseInt(document.getElementById('q17')?.value) || 0;
+
+  // Resíduos
+  let residuos = 0;
+  residuos += parseInt(document.getElementById('q18')?.value) || 0;
+  residuos += parseInt(document.getElementById('q19')?.value) || 0;
+  residuos += parseInt(document.getElementById('q20')?.value) || 0;
+
+  // Total e mensagem
+  const total = deslocacoes + tipologia + alimentacao + agua + energia + residuos;
+
+  let message = "";
+  if (total < 26)      message = "Baixa";
+  else if (total < 38) message = "Moderada";
+  else                 message = "Alta";
+
+  const statusClass = message === 'Baixa' ? 'status-low'
+                    : message === 'Moderada' ? 'status-mid'
+                    : 'status-high';
+
+  // Troca de ecrã
+  if (slidesWrap) slidesWrap.style.display = 'none';
+  results.style.display = 'block';
+
+  // Elementos *dentro* do results
+  const resultEl   = results.querySelector('#result');
+  const resultCOEl = results.querySelector('#resultCO');
+  const resultArvoresEl = results.querySelector('#resultArvores');
+  const chartWrap  = results.querySelector('#chart-container');
+  const canvas     = results.querySelector('#footprintChart');
+  const tipEl      = results.querySelector('#eco-tip');
+
+  if (resultEl) {
+    resultEl.innerHTML =
+      `O valor é de <span class="result-highlight">${total}</span>, ` +
+      `logo a tua ponderação é <span class="status ${statusClass}">${message}</span>.`;
+  }
+
+  if (resultCOEl) {
+    const kgFmt = kgDesloc.toFixed(1).replace('.', ',');
+    resultCOEl.innerHTML = `🚗 Emissões de deslocação: <strong>${kgFmt} kg CO₂</strong>`;
+  }
+
+  if (resultArvoresEl) {
+    resultArvoresEl.innerHTML = `Estas emissões equivalem ao que <strong>${arvores}</strong> árvores adultas demoram um ano inteiro a absorver e limpar da atmosfera.`;
+  }
+
+  /* ===== Gráfico de Barras (Horizontal) ===== */
+  if (chartWrap) chartWrap.style.display = 'block';
+
+  if (canvas) {
+    if (window.footprintChart) {
+      try { window.footprintChart.destroy(); } catch (e) {}
+      window.footprintChart = null;
+    }
+
+    const labels = ['Deslocações', 'Tipologia de Atividade', 'Alimentação', 'Água', 'Energia', 'Resíduos'];
+    const values = [deslocacoes, tipologia, alimentacao, agua, energia, residuos];
+    const colors = ['#FFA500', '#868686', '#2E8B57', '#4682B4', '#FFD700', '#800080'];
+
+    const rowHeight = 44;
+    canvas.height = labels.length * rowHeight;
+
+    requestAnimationFrame(() => {
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      window.footprintChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [{
+            label: 'Ponderação',
+            data: values,
+            backgroundColor: colors,
+            borderWidth: 0,
+            borderRadius: 8,
+            barThickness: 28
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              beginAtZero: true,
+              ticks: { stepSize: 2 },
+              grid: { color: 'rgba(0,0,0,0.06)' },
+              title: {
+                display: true,
+                text: 'Ponderação'
+              }
+            },
+            y: {
+              grid: { display: false },
+              ticks: {
+                font: { size: 12 }
+              }
+            }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => ` ${ctx.raw}`
+              }
+            }
+          },
+          animation: {
+            duration: 350
+          }
+        }
+      });
+    });
+  }
+
+  /* ===== Dicas — 1 aleatória por categoria ===== */
+  const categorias = ['Deslocações', 'Tipologia de Atividade', 'Alimentação', 'Água', 'Energia', 'Resíduos'];
+
+const dicas = {
+  'Deslocações': [
+    "🚶‍♀️ Considera reduzir o uso de transporte individual. Partilhar boleias ou usar transportes públicos pode fazer uma grande diferença!",
+    "🚲 Se possível, opta por deslocações a pé ou de bicicleta. São opções mais saudáveis e com menor impacte ambiental.",
+    "🚗 Sempre que possível, planeia as deslocações para reduzir o tempo de viagem e as emissões de CO₂.",
+    "🛑 Não te esqueças de promover o uso de transportes públicos e outras alternativas, sempre que possível. Reduz o impacte ambiental com escolhas mais conscientes.",
+    "🚌 Se estiveres a participar numa atividade nacional ou regional, e fores sozinho, pergunta à organização se há boleias ou qual a melhor forma de chegar através de transportes públicos.",
+    "📅 Se possível, organiza o programa da atividade com base nos horários dos transportes públicos, para facilitar uma mobilidade mais sustentável."
+  ],
+
+  'Tipologia de Atividade': [
+    "📦 Pensa em formas de tornar as tuas atividades mais sustentáveis, reduzindo a compra de materiais (podes sempre procurar algo para reutilizar) e evita *merchandising*!",
+    "🛠️ Sempre que possível, usa equipamentos e materiais reutilizáveis, para reduzir a produção de resíduos.",
+    "📝 O planeamento da atividade é o momento certo para pensar na sustentabilidade da mesma: as deslocações, alimentação, materiais, o orçamento e as atividades que vão fazer, tudo pode ser ajustado para reduzirem o vosso impacte.",
+    "💡 Planeia atividades que não envolvam grandes impactes ambientais. O uso de espaços naturais deve ser sempre feito com respeito ao ecossistema, minimizando danos. Segue os seus **princípios** e protege a natureza! Conheces o projeto **Leave no Trace**? <a href='https://ambiente.escutismo.pt/leave-no-trace/' target='_blank'>Sabe mais aqui</a>.",
+    "🔄 Se for necessário usar materiais, tenta sempre optar por opções recicláveis e de baixo impacte. O desafio **Escolher Melhor** da **Earth Tribe** promove hábitos sustentáveis! <a href='https://ambiente.escutismo.pt/projetos/earth-tribe/campeoes-da-natureza/' target='_blank'>Sabe mais aqui</a>",
+    "🎒 Diz não aos descartáveis! Relembra a tua secção para levar caneca e chávena reutilizável."
+  ],
+
+  'Alimentação': [
+    "🥦 Opta por alimentos locais ou nacionais. Basta olhares para a etiqueta do produto e ver se é produzido em Portugal. Pequenas escolhas fazem grande impacte!",
+    "🌱 Comprar alimentos aos produtores locais ou de produção orgânica reduz a pegada de carbono associada ao transporte, ao uso de pesticidas e fertilizantes químicos.",
+    "🍎 No planeamento da ementa da atividade, aceita o desafio de reduzir o consumo de carne e ter uma dieta variada e equilibrada.",
+    "🍽️ Reduz o desperdício de alimentos. Planeia bem as refeições e usa as sobras de maneira criativa para evitar desperdícios. Podes usar o guia alimentar para escuteiros para te ajudar nesta tarefa.",
+    "🍳 Opta por métodos de preparação de alimentos com baixo consumo de energia, como por exemplo fornos solares, e assim aproveitar para fazer o projeto **Scouts Go Solar**. <a href='https://ambiente.escutismo.pt/projetos/earth-tribe/scouts-go-solar/' target='_blank'>Sabe mais aqui</a>",
+    "🍴 Considera realizar atividades pedagógicas sobre alimentação sustentável. O projeto **Escutismo.come** incentiva boas escolhas alimentares com base em produtos locais. <a href='https://ambiente.escutismo.pt/projetos/escutismo-come/' target='_blank'>Sabe mais aqui</a>",
+    "🏷️ Escolhe produtos alimentares com certificações ambientais (ex: no chocolate, procura os que têm o símbolo da Rainforest Alliance).",
+    "🗓️ Tenta adaptar a ementa aos produtos sazonais e da época. Apesar de termos grande oferta nas grandes superfícies, podemos optar pela fruta e legumes da época, assegurando melhor qualidade.",
+    "✅ Verifica na sede se existem alimentos que sobraram de outras atividades e dá preferência aos mesmos, caso se encontrem dentro do prazo de validade, ajudando a reduzir o desperdício alimentar.",
+    "⚖️ Se possível, compra a granel! Desta forma, consegues comprar a quantidade que precisas, evitando o desperdício."
+  ],
+
+  'Água': [
+    "🚰 Ao lavar alimentos, utiliza a água de maneira eficiente: usa recipientes para capturar a água usada e reaproveita para outras tarefas, como regar plantas (isto se a água não estiver contaminada).",
+    "💦 Sempre que possível, utiliza sistemas de recolha de água da chuva. É uma ótima forma de aproveitar a água para lavagens simples, para regar as plantas e outras necessidades, sem sobrecarregar o consumo convencional.",
+    "🌊 Para atividades perto de corpos d'água, evita usar sabões ou detergentes prejudiciais ao meio ambiente. Opta por opções biodegradáveis e sem químicos agressivos.",
+    "💧 Garante que todos os elementos levam um cantil, para evitarem a compra de garrafas descartáveis.",
+    "⏱️ Definam um tempo máximo para os banhos (por exemplo, 5 minutos).",
+    "🚰 Considera a utilização de um jarro de filtragem de água para reduzir o uso de garrafas plásticas e promover o consumo consciente de água.",
+    "🗺️ Faz um projeto **Maré de Mudança** para aprender sobre a conservação da água e ajudar na preservação dos ecossistemas aquáticos. <a href='https://ambiente.escutismo.pt/projetos/earth-tribe/mare-de-mudanca/' target='_blank'>Sabe mais aqui</a>",
+    "🚫 Ao realizar a higiene pessoal, fecha a torneira sempre que te ensaboas, escovas os dentes, etc.",
+    "🔍 Verifica sempre se as torneiras ficam bem fechadas e sem pingar.",
+    "🧼 Lava a loiça em bacias e usa apenas a água disponível nessas bacias."
+  ],
+
+  'Energia': [
+    "🔋 Explora formas de usar energias renováveis e reduzir o consumo energético nas tuas atividades. Conhece o projeto <a href='https://ambiente.escutismo.pt/projetos/hora-do-planeta/' target='_blank'>Hora do Planeta</a>.",
+    "💡 Sempre que possível, desliga os aparelhos eletrónicos quando não estiverem em uso. A economia de energia é uma forma simples de reduzir o impacte ambiental.",
+    "🌞 Se possível, opta por alternativas como cozinhar com energia solar, como o desafio **Scouts Go Solar** promove. <a href='https://ambiente.escutismo.pt/projetos/earth-tribe/scouts-go-solar/' target='_blank'>Sabe mais aqui</a>",
+    "⚡ Para reduzir o impacte, considera usar lanternas a energia solar durante atividades ao ar livre, promovendo o uso de energias limpas e renováveis.",
+    "🍲 Sempre que possível, tapa o tacho ao cozinhar, de forma a não desperdiçar o calor e, consequentemente, o gás utilizado.",
+    "🔥 Na fogueira, opta por acendalhas naturais como folhas secas, pequenos galhos ou pinhas.",
+    "🔦 Opta por soluções alternativas às lanternas tradicionais, como lanternas à manivela, com pilhas recarregáveis ou que tenham incorporado um painel solar."
+  ],
+
+  'Resíduos': [
+    "♻️ Reduz, reutiliza e recicla sempre que possível. Uma boa separação de resíduos é essencial! Consulta o nosso guia <a href='https://ambiente.escutismo.pt/projetos/earth-tribe/campeoes-da-natureza/' target='_blank'>Aprende a Reciclar</a>.",
+    "🚮 Uma boa prática de separação de resíduos é crucial. Separa os resíduos recicláveis, como plásticos, vidros e papéis, e reencaminha-os corretamente. A compostagem de resíduos orgânicos também é uma excelente forma de reduzir a quantidade de lixo enviado para aterros.",
+    "🛍️ Evita o uso de sacos plásticos descartáveis. Usa sacos de pano, papel ou material reciclado para transportar alimentos e materiais. Sempre que possível, reutiliza embalagens e recipientes.",
+    "🌍 Participa em atividades de limpeza costeira ou fluvial, como o **Mês do Mar**, para ajudar a preservar o oceano. Menos lixo significa mais vida marinha. <a href='https://ambiente.escutismo.pt/projetos/mes-do-mar/' target='_blank'>Sabe mais aqui</a>.",
+    "🌿 Opta por materiais naturais e recicláveis em vez de plásticos descartáveis. A escolha de produtos com menos embalagens ajuda a reduzir a pegada ambiental e a promover um consumo consciente. Sabias que podes fazer um projeto Earth Tribe sobre esta temática? <a href='https://ambiente.escutismo.pt/projetos/earth-tribe/campeoes-da-natureza/' target='_blank'>Sabe mais aqui</a>.",
+    "📦 Explora o conceito de economia circular: troca, reutiliza e recicla o que for possível. Participa no projeto **Green Cork**, onde a recolha de rolhas de cortiça contribui para o plantio de árvores. <a href='https://ambiente.escutismo.pt/projetos/green-cork/' target='_blank'>Sabe mais aqui</a>.",
+    "🛢️ Não te esqueças de separar os óleos alimentares usados, e colocar num oleão no final da atividade. Desta forma, evitas a contaminação dos solos e das águas."
+  ]
+};
+
+
+  if (tipEl) {
+    const todasAsDicas = categorias.map(cat => {
+      const arr = dicas[cat];
+      return arr[Math.floor(Math.random() * arr.length)];
+    });
+
+    tipEl.innerHTML = todasAsDicas.join("<hr>");
+    tipEl.style.display = 'block';
+  }
 }
-
-
-/* Garantir gráfico menor e título centrado (reforço) */
-.result-title { text-align: center; }
-.chart-container { flex: 0 1 320px; max-width: 320px; }
-@media (max-width: 768px) {
-  .chart-container { flex-basis: 280px; max-width: 280px; }
-}
-
-/* Texto do resultado + badges coloridas */
-#result { text-align: center; font-size: 1.15rem; }
-.result-highlight { font-size: 1.35rem; font-weight: 700; }
-.status { display:inline-block; padding:4px 12px; border-radius:999px; font-weight:700; }
-.status-low  { background:#e6f7ef; color:#1e7f57; }
-.status-mid  { background:#fff7e6; color:#a36a00; }
-.status-high { background:#ffe8e6; color:#b13a2d; }
-
-
-
-
-/* ===== Recursos Ambientais ===== */
-.resources-container {
-  background: #fff;
-  border: 1px solid #e2eee8;
-  border-radius: 16px;
-  padding: 28px;
-  margin: 20px auto;
-  width: 100%;
-  max-width: 1100px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
-  text-align: center;
-  transition: transform 0.25s, box-shadow 0.25s;
-}
-
-.resources-container:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.12);
-}
-
-.resources-container h2 {
-  font-weight: 600;
-  font-size: 1.4rem;
-  color: #0f5c3e;
-  margin-bottom: 10px;
-}
-
-.resources-container p {
-  color: #333;
-  line-height: 1.5;
-  margin-bottom: 18px;
-}
-
-/* links e descrições dos recursos */
-.resources-links {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.resources-links a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 16px;
-  border-radius: 12px;
-  background: #e9f3ef;
-  color: #0f5c3e;
-  text-decoration: none;
-  font-weight: 600;
-  transition: transform 0.2s, background-color 0.2s, box-shadow 0.2s;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
-  width: 100%;
-  max-width: 400px;
-}
-
-.resources-links a:hover {
-  background: #d6ece3;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.1);
-}
-
-/* texto explicativo entre parênteses */
-.resource-desc {
-  font-size: 0.95rem;
-  color: #444;
-  max-width: 600px;
-  margin: 0 auto 15px;
-  font-style: italic;
-  opacity: 0.9;
-}
-
-
-
-
