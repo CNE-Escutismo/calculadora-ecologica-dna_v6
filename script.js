@@ -16,7 +16,7 @@ function goToSlide(index) {
 function startQuiz() {
   const home = document.getElementById('home');
   if (home) home.style.display = 'none';
-  showSlide(1);
+  showSlide(0);
 }
 
 function showSlide(index) {
