@@ -79,6 +79,8 @@ h1 { font-weight: 700; font-size: 2rem; margin: 0 0 8px; color: #0f5c3e; }
 h2 { font-weight: 600; font-size: 1.4rem; margin: 0 0 14px; color: #0f5c3e; }
 p  { margin: 0 0 12px; line-height: 1.6; }
 
+#resultArvores { font-size: 0.9em; text-align: center; }
+
 /* ===== Intro (primeiro ecrã) centrado ===== */
 #home .intro-container { text-align: center; }
 #home .intro-container button { margin-left: auto; margin-right: auto; display: inline-flex; }
@@ -168,7 +170,7 @@ button.secondary:hover { background: #1c4f2e; }
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   text-align: left;
 }
-#results h2, #result, #resultCO { text-align: center; }
+#results h2, #result, #resultCO, #resultArvores { text-align: center; }
 
 .tips-title { margin: 0 0 8px; font-weight: 600; color: #0f5c3e; font-size: 1.1rem; }
 .tip-item   { margin: 8px 0; }
