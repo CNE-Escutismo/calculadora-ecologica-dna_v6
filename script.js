@@ -143,6 +143,7 @@ function showResults() {
   // Deslocações (índice p/ score + kg p/ mostrar)
   const indiceDesloc = calcularImpactoDeslocacaoIndice();
   const kgDesloc     = calcularCO2DeslocacaoKg();
+  const arvores      = Math.round(kgDesloc / 22);
   const deslocacoes  = indiceDesloc;
 
   // Tipologia
@@ -194,6 +195,7 @@ function showResults() {
   // Elementos *dentro* do results
   const resultEl   = results.querySelector('#result');
   const resultCOEl = results.querySelector('#resultCO');
+  const resultArvoresEl = results.querySelector('#resultArvores');
   const chartWrap  = results.querySelector('#chart-container');
   const canvas     = results.querySelector('#footprintChart');
   const tipEl      = results.querySelector('#eco-tip');
@@ -207,6 +209,10 @@ function showResults() {
   if (resultCOEl) {
     const kgFmt = kgDesloc.toFixed(1).replace('.', ',');
     resultCOEl.innerHTML = `🚗 Emissões de deslocação: <strong>${kgFmt} kg CO₂</strong>`;
+  }
+
+  if (resultArvoresEl) {
+    resultArvoresEl.innerHTML = `Estas emissões equivalem ao que <strong>${arvores}</strong> árvores adultas demoram um ano inteiro a absorver e limpar da atmosfera.`;
   }
 
   /* ===== Gráfico de Barras (Horizontal) ===== */
@@ -234,7 +240,7 @@ function showResults() {
         data: {
           labels,
           datasets: [{
-            label: 'Pontuação',
+            label: 'Ponderação',
             data: values,
             backgroundColor: colors,
             borderWidth: 0,
@@ -250,7 +256,11 @@ function showResults() {
             x: {
               beginAtZero: true,
               ticks: { stepSize: 2 },
-              grid: { color: 'rgba(0,0,0,0.06)' }
+              grid: { color: 'rgba(0,0,0,0.06)' },
+              title: {
+                display: true,
+                text: 'Ponderação'
+              }
             },
             y: {
               grid: { display: false },
