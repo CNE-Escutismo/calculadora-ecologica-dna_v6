@@ -180,9 +180,9 @@ function showResults() {
   const total = deslocacoes + tipologia + alimentacao + agua + energia + residuos;
 
   let message = "";
-  if (total < 26)      message = "Baixa";
-  else if (total < 38) message = "Moderada";
-  else                 message = "Alta";
+  if (total < 26)      message = "Baixo";
+  else if (total < 38) message = "Moderado";
+  else                 message = "Alto";
 
   const statusClass = message === 'Baixa' ? 'status-low'
                     : message === 'Moderada' ? 'status-mid'
@@ -203,7 +203,7 @@ function showResults() {
   if (resultEl) {
     resultEl.innerHTML =
       `O valor é de <span class="result-highlight">${total}</span>, ` +
-      `logo a tua ponderação é <span class="status ${statusClass}">${message}</span>.`;
+      `logo a teu impacte é <span class="status ${statusClass}">${message}</span>.`;
   }
 
   if (resultCOEl) {
